@@ -1,0 +1,23 @@
+---
+import { actions } from 'astro:actions';
+import { Todo } from 'astro:db';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  id: number;
+  task: string;
+  completed: Date | null;
+}
+---
+<ViewTransitions />
+<li>
+  <form method="post" action={actions.toggleTodo} class="w-full flex flex-row">
+    <input type="hidden" name="id" value={Astro.props.id} />
+    <input
+      type="checkbox"
+      onchange="this.form.submit()"
+      checked={Astro.props.completed != null}
+      class="mr-4"
+    /><p>{Astro.props.task}</p>
+  </form>
+</li>

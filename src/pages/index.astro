@@ -1,0 +1,24 @@
+---
+import { asc } from "astro:db"
+import { db, Todo } from "astro:db"
+import Item from "../components/Item.astro"
+import { ViewTransitions } from "astro:transitions"
+
+const todos = await db.select().from(Todo).orderBy(asc(Todo.created))
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+		<ViewTransitions />
+	</head>
+	<body>
+		<ul>
+			{todos.map(todo => <Item id={todo.id} task={todo.task} completed={todo.completed} />)}
+		</ul>
+	</body>
+</html>
